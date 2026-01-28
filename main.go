@@ -6,5 +6,7 @@ type Recipint struct {
 }
 
 func main() {
-	loadRecipients("./emails.csv")
+
+	recipentChannel := make(chan Recipint)
+	loadRecipients("./emails.csv", recipentChannel)
 }
