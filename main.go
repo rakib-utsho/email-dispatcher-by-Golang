@@ -1,6 +1,8 @@
 package main
 
 import (
+	"bytes"
+	"html/template"
 	"sync"
 )
 
@@ -28,4 +30,20 @@ func main() {
 	}
 	// wait for all workers to finish
 	wg.Wait()
+}
+
+func executeTemplate(r Recipient) (string, error) {
+	t, err := template.ParseFiles("email.tmpl")
+
+	if err != nil {
+		return "", err
+	}
+	var tpl bytes.Buffer
+	error := t.Execute(&tpl, r)
+
+	if error != nil {
+		return "", err
+	}
+
+	return tpl.String(), nil
 }
